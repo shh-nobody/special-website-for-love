@@ -18,6 +18,26 @@ const newsImages = {
   artSpace: "/images/core-memories-7.jpg.png",
   sidebar1: "/images/core-memories-10.jpg",
   sidebar2: "/images/core-memories-11.jpg",
+  sidebar3: "/images/20240917_172912.jpg",
+  sidebar4: "/images/20241002_161518.jpg",
+};
+
+const PolaroidImages = {
+  art1: "/images/core-memories-1.jpg",
+  museum: "/images/core-memories-2.jpg",
+  installation: "/images/core-memories-3.jpg",
+  gallery: "/images/core-memories-4.jpg",
+  sculpture: "/images/core-memories-5.png",
+  exhibition: "/images/core-memories-6.png",
+  painting: "/images/core-memories-9.jpg",
+  artist: "/images/core-memories-8.png.jpg",
+  artSpace: "/images/20241205_111856.jpg",
+  sidebar1: "/images/core-memories-10.jpg",
+  sidebar2: "/images/core-memories-11.jpg",
+  sidebar3: "/images/20240917_172912.jpg",
+  sidebar4: "/images/20241002_161518.jpg",
+  sidebar5: "/images/Screenshot 2024-08-31 233039.png",
+  sidebar6: "/images/Untitled297_20250107182949.png",
 };
 
 // All gallery images
@@ -79,7 +99,7 @@ const galleryImages = [
 import { Toaster, toast } from "react-hot-toast";
 export default function OurStoryPage() {
   const [activeTab, setActiveTab] = useState<
-    "Core Memories" | "note" | "gallery"
+    "Core Memories" | "Polaroids" | "note" | "gallery"
   >("Core Memories");
   const [note, setNote] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -139,8 +159,8 @@ export default function OurStoryPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-neutral-900 via-rose-900/60 to-gray-800 text-white flex flex-col">
       {/* Audio Player */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <div className="bg-black/70 backdrop-blur-sm rounded-full p-4 shadow-lg flex items-center gap-3">
+      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50">
+        <div className="bg-black/70 backdrop-blur-sm rounded-full p-3 sm:p-4 shadow-lg flex items-center gap-2 sm:gap-3">
           <button
             onClick={togglePlay}
             className="w-10 h-10 flex items-center justify-center rounded-full bg-rose-600 hover:bg-rose-700 transition-colors"
@@ -169,9 +189,11 @@ export default function OurStoryPage() {
         />
       </div>
       {/* Navigation */}
-      <nav className="flex items-center gap-6 px-10 py-6 bg-gradient-to-r from-neutral-900/80 to-rose-900/60 shadow-lg">
-        <h1 className="text-4xl font-bold tracking-tight">Our Moments</h1>
-        <div className="flex gap-2 ml-8">
+      <nav className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 px-4 sm:px-10 py-6 bg-gradient-to-r from-neutral-900/80 to-rose-900/60 shadow-lg">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          Our Moments
+        </h1>
+        <div className="flex flex-wrap justify-center gap-2 sm:ml-8">
           <button
             className={`px-4 py-1 rounded-full text-sm font-medium border border-transparent ${
               activeTab === "Core Memories"
@@ -181,6 +203,16 @@ export default function OurStoryPage() {
             onClick={() => setActiveTab("Core Memories")}
           >
             Core Memories
+          </button>
+          <button
+            className={`px-4 py-1 rounded-full text-sm font-medium border border-transparent ${
+              activeTab === "Polaroids"
+                ? "bg-rose-600 text-white"
+                : "bg-neutral-800 text-gray-300 hover:bg-neutral-700"
+            }`}
+            onClick={() => setActiveTab("Polaroids")}
+          >
+            Polaroids
           </button>
           <button
             className={`px-4 py-1 rounded-full text-sm font-medium border border-transparent ${
@@ -205,14 +237,82 @@ export default function OurStoryPage() {
         </div>
       </nav>
 
-      <div className="flex-1 flex flex-col lg:flex-row gap-8 px-10 py-8 max-w-7xl w-full mx-auto">
+      <div className="flex-1 flex flex-col lg:flex-row gap-8 px-4 sm:px-10 py-8 max-w-7xl w-full mx-auto overflow-x-hidden">
+        {activeTab === "Polaroids" && (
+          <div className="flex-1 min-h-[80vh] bg-neutral-800/30 rounded-xl p-8 relative">
+            <div className="absolute inset-0 bg-[url('/images/corkboard.jpg')] opacity-10 bg-cover bg-center rounded-xl" />
+            <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
+              {Object.entries(PolaroidImages).map(([key, src], index) => (
+                <motion.div
+                  key={key}
+                  className="bg-white rounded-lg shadow-xl p-3 cursor-move"
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                    rotate: Math.random() * 10 - 5,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    rotate: Math.random() * 10 - 5,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20,
+                    delay: index * 0.1,
+                  }}
+                  drag
+                  dragConstraints={{
+                    left: -100,
+                    right: 100,
+                    top: -100,
+                    bottom: 100,
+                  }}
+                  dragElastic={0.1}
+                  whileHover={{ scale: 1.05, rotate: 0 }}
+                  whileTap={{ scale: 0.95, rotate: 0 }}
+                >
+                  <div className="relative w-full aspect-square mb-3 bg-neutral-100 rounded overflow-hidden">
+                    <Image
+                      src={src}
+                      alt={`Memory ${index + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
+                  <div className="p-2 text-center">
+                    <p className="text-neutral-800 font-handwriting text-sm">
+                      {key === "art1" && "Our First Date ❤️"}
+                      {key === "museum" && "Just Us Being Us 🥰"}
+                      {key === "installation" && "Friends Noticed Us 👀"}
+                      {key === "gallery" && "Cutie Patootie 😈"}
+                      {key === "sculpture" && "Colorful Days 🎨"}
+                      {key === "exhibition" && "You Made Our Official Card! ✨"}
+                      {key === "painting" && "Best Experience 💝"}
+                      {key === "artist" && "EC Activities 🎭"}
+                      {key === "artSpace" && "First Spark ⚡"}
+                      {key === "sidebar1" && "Sweet Memories 🍬"}
+                      {key === "sidebar2" && "OTN 2024 With You 💫"}
+                      {key === "sidebar3" && "Our Special Day 🌟"}
+                      {key === "sidebar4" && "Our Journey Continues 🌈"}
+                      {key === "sidebar5" && "A Discord Night ✨"}
+                      {key === "sidebar6" && "Jojo Pose 🔥"}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
         {activeTab === "Core Memories" && (
           <>
             {/* Left column */}
             <div className="flex-1 flex flex-col gap-8 min-w-0">
-              <div className="flex gap-6">
-                <div className="w-48 flex-shrink-0">
-                  <div className="relative w-full h-32 rounded-xl overflow-hidden mb-3">
+              <div className="flex flex-col sm:flex-row gap-6">
+                <div className="w-full sm:w-48 flex-shrink-0">
+                  <div className="relative w-full h-48 sm:h-32 rounded-xl overflow-hidden mb-3">
                     <Image
                       src={newsImages.art1}
                       alt="Core Memory 1"
@@ -351,8 +451,8 @@ export default function OurStoryPage() {
               </div>
             </div>
             {/* Right column */}
-            <aside className="w-full lg:w-80 flex-shrink-0 flex flex-col gap-8">
-              <div className="bg-rose-700/80 rounded-xl p-6 text-white">
+            <aside className="w-full lg:w-80 flex-shrink-0 flex flex-col gap-6 sm:gap-8">
+              <div className="bg-rose-700/80 rounded-xl p-4 sm:p-6 text-white">
                 <div className="text-xs uppercase tracking-widest mb-2">
                   Anniversary Was 17 Days Ago !
                 </div>
@@ -452,7 +552,7 @@ export default function OurStoryPage() {
 
         {activeTab === "gallery" && (
           <div className="flex-1 p-8">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-min">
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-min">
               {galleryImages.map((src, index) => (
                 <motion.div
                   key={src}

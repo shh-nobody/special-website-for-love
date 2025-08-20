@@ -1,7 +1,11 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Caveat } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
+});
 
 export const metadata = {
   title: "My Love Story",
@@ -15,7 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${caveat.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
