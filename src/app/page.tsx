@@ -1,103 +1,103 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const router = useRouter();
+  const [isOpening, setIsOpening] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleEnvelopeClick = () => {
+    setIsOpening(true);
+    setTimeout(() => {
+      router.push("/letter");
+    }, 1500); // Wait for animation to complete before redirecting
+  };
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-r from-pink-100 to-rose-200">
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1 }}
+        className="relative w-80 h-56 cursor-pointer"
+        onClick={handleEnvelopeClick}
+        style={{ perspective: "1000px" }}
+      >
+        {/* Letter */}
+        <motion.div
+          className="absolute left-1/2 top-1/2 w-[70%] h-[80%] bg-white rounded-lg shadow-lg -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
+          initial={{ y: 0 }}
+          animate={{
+            y: isOpening ? -100 : 0,
+            scale: isOpening ? 1.1 : 1,
+            zIndex: isOpening ? 20 : 5,
+          }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          <span className="text-4xl transform hover:scale-110 transition-transform">
+            💌
+          </span>
+        </motion.div>
+
+        {/* Envelope Body */}
+        <motion.div
+          className="absolute inset-0 bg-rose-400 rounded-lg shadow-lg overflow-hidden"
+          animate={{ scale: isOpening ? 1.1 : 1, zIndex: isOpening ? 1 : 10 }}
+          transition={{ duration: 0.3 }}
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          {/* Bottom Triangle */}
+          <div className="absolute bottom-0 left-0 w-full h-0 border-l-[160px] border-r-[160px] border-b-[80px] border-l-transparent border-r-transparent border-b-rose-500" />
+        </motion.div>
+
+        {/* Side Flaps */}
+        <div
+          className="absolute inset-0 overflow-hidden rounded-lg"
+          style={{ zIndex: 8 }}
+        >
+          {/* Left Flap */}
+          <div className="absolute left-0 top-1/2 w-1/2 h-1/2 origin-right bg-rose-500/80 -skew-y-[20deg]" />
+          {/* Right Flap */}
+          <div className="absolute right-0 top-1/2 w-1/2 h-1/2 origin-left bg-rose-500/80 skew-y-[20deg]" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        {/* Top Flap */}
+        <motion.div
+          className="absolute top-0 left-0 w-full h-1/2 origin-bottom bg-rose-300 rounded-t-lg"
+          initial={{ rotateX: 0 }}
+          animate={{ rotateX: isOpening ? -180 : 0 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+          style={{
+            transformStyle: "preserve-3d",
+            backfaceVisibility: "hidden",
+            zIndex: isOpening ? 1 : 10,
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <div className="absolute inset-0 bg-rose-500 rounded-t-lg transform rotate-180" />
+          {/* Inner shadow for depth */}
+          <div className="absolute inset-0 bg-black/10 rounded-t-lg" />
+        </motion.div>
+
+        {/* Letter */}
+        <motion.div
+          className="absolute left-1/2 top-1/2 w-[70%] h-[80%] bg-white rounded-lg shadow-lg -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
+          initial={{ y: 0 }}
+          animate={{
+            y: isOpening ? -100 : 0,
+            scale: isOpening ? 1.1 : 1,
+            zIndex: isOpening ? 20 : 5,
+          }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          style={{ transformStyle: "preserve-3d" }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <span className="text-4xl transform hover:scale-110 transition-transform">
+            💌
+          </span>
+        </motion.div>
+      </motion.div>
+    </main>
   );
 }
