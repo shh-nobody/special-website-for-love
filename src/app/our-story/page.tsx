@@ -104,7 +104,7 @@ export default function OurStoryPage() {
       } else {
         toast.error("Failed to send. Try again later.");
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error("Something went wrong.");
     } finally {
       setIsSending(false);
@@ -212,13 +212,15 @@ export default function OurStoryPage() {
             <div className="flex-1 flex flex-col gap-8 min-w-0">
               <div className="flex gap-6">
                 <div className="w-48 flex-shrink-0">
-                  <Image
-                    src={newsImages.art1}
-                    alt="Core Memory 1"
-                    width={320}
-                    height={128}
-                    className="rounded-xl w-full h-32 object-cover mb-3"
-                  />
+                  <div className="relative w-full h-32 rounded-xl overflow-hidden mb-3">
+                    <Image
+                      src={newsImages.art1}
+                      alt="Core Memory 1"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
                   <h3 className="text-lg font-semibold">
                     Our First Official Date
                   </h3>
@@ -233,13 +235,15 @@ export default function OurStoryPage() {
                   </div>
                 </div>
                 <div className="flex-1 flex flex-col gap-6">
-                  <Image
-                    src={newsImages.museum}
-                    alt="Core Memory 2"
-                    width={640}
-                    height={256}
-                    className="rounded-xl w-full h-64 object-cover mb-3"
-                  />
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden mb-3">
+                    <Image
+                      src={newsImages.museum}
+                      alt="Core Memory 2"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
                   <h2 className="text-2xl font-bold mb-2">Just Us being Us</h2>
                   <p className="text-gray-300 mb-2">
                     We have daily meetups at the akatel canteen. During our meet
@@ -284,10 +288,10 @@ export default function OurStoryPage() {
                   </h2>
                   <p className="text-gray-300 mb-2">
                     That day , we were waiting for practical exam results and
-                    you were binding my hand with those ribbons and said, &ldquo;Devil
-                    bornt just to be a cutie patootie.&rdquo; It made me laugh so hard
-                    HAHAHAHAHA , and i posted this photo on my instagram story
-                    XD{" "}
+                    you were binding my hand with those ribbons and said,
+                    &ldquo;Devil bornt just to be a cutie patootie.&rdquo; It
+                    made me laugh so hard HAHAHAHAHA , and i posted this photo
+                    on my instagram story XD{" "}
                     <span className="text-gray-500">
                       Unforgettable moment tho
                     </span>
@@ -305,8 +309,8 @@ export default function OurStoryPage() {
                   />
                   <h3 className="text-lg font-semibold">EC Activities</h3>
                   <p className="text-gray-300 text-sm mb-2">
-                    I&apos;m always impressed by your creativity and leadership in
-                    organizing events. Your passion for art shines through in
+                    I&apos;m always impressed by your creativity and leadership
+                    in organizing events. Your passion for art shines through in
                     everything you do. Keep inspiring others with your
                     dedication and vision.
                   </p>
@@ -414,13 +418,13 @@ export default function OurStoryPage() {
                   You were the best experience..
                 </h3>
                 <p className="text-gray-300 text-sm">
-                  Although i haven&apos;t treated you well , you always made me feel
-                  special. I&apos;m sorry for everything. I know you deserve better.
-                  I went silence not meant to dump you. I just wanted to
-                  validate that ur feelings are valid. Although i want to
-                  express my feelings, I just couldn&apos;t find the right words. So
-                  i made this website to express my feelings. I hope you
-                  understand that i still care about you and i want to make
+                  Although i haven&apos;t treated you well , you always made me
+                  feel special. I&apos;m sorry for everything. I know you
+                  deserve better. I went silence not meant to dump you. I just
+                  wanted to validate that ur feelings are valid. Although i want
+                  to express my feelings, I just couldn&apos;t find the right
+                  words. So i made this website to express my feelings. I hope
+                  you understand that i still care about you and i want to make
                   things right between us.{" "}
                   <span className="text-gray-500">:(</span>
                 </p>
@@ -459,13 +463,16 @@ export default function OurStoryPage() {
                     index % 5 === 0 ? "col-span-2 row-span-2" : ""
                   }`}
                 >
-                  <Image
-                    src={src}
-                    alt={`Memory ${index + 1}`}
-                    width={400}
-                    height={400}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  />
+                  <div className="relative w-full h-full aspect-square">
+                    <Image
+                      src={src}
+                      alt={`Memory ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover hover:scale-105 transition-transform duration-300"
+                      priority={index < 4}
+                    />
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
                     <p className="text-white p-4 text-sm font-medium">
                       {src.split("/").pop()?.split(".")[0]}
