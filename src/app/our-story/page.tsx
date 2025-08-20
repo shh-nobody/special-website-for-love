@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { IoMdPlay, IoMdPause } from "react-icons/io";
+import Image from "next/image";
 
 // News section images
 const newsImages = {
@@ -211,9 +212,11 @@ export default function OurStoryPage() {
             <div className="flex-1 flex flex-col gap-8 min-w-0">
               <div className="flex gap-6">
                 <div className="w-48 flex-shrink-0">
-                  <img
+                  <Image
                     src={newsImages.art1}
                     alt="Core Memory 1"
+                    width={320}
+                    height={128}
                     className="rounded-xl w-full h-32 object-cover mb-3"
                   />
                   <h3 className="text-lg font-semibold">
@@ -230,9 +233,11 @@ export default function OurStoryPage() {
                   </div>
                 </div>
                 <div className="flex-1 flex flex-col gap-6">
-                  <img
+                  <Image
                     src={newsImages.museum}
                     alt="Core Memory 2"
+                    width={640}
+                    height={256}
                     className="rounded-xl w-full h-64 object-cover mb-3"
                   />
                   <h2 className="text-2xl font-bold mb-2">Just Us being Us</h2>
@@ -279,8 +284,8 @@ export default function OurStoryPage() {
                   </h2>
                   <p className="text-gray-300 mb-2">
                     That day , we were waiting for practical exam results and
-                    you were binding my hand with those ribbons and said, "Devil
-                    bornt just to be a cutie patootie." It made me laugh so hard
+                    you were binding my hand with those ribbons and said, &ldquo;Devil
+                    bornt just to be a cutie patootie.&rdquo; It made me laugh so hard
                     HAHAHAHAHA , and i posted this photo on my instagram story
                     XD{" "}
                     <span className="text-gray-500">
@@ -300,7 +305,7 @@ export default function OurStoryPage() {
                   />
                   <h3 className="text-lg font-semibold">EC Activities</h3>
                   <p className="text-gray-300 text-sm mb-2">
-                    I'm always impressed by your creativity and leadership in
+                    I&apos;m always impressed by your creativity and leadership in
                     organizing events. Your passion for art shines through in
                     everything you do. Keep inspiring others with your
                     dedication and vision.
@@ -409,11 +414,11 @@ export default function OurStoryPage() {
                   You were the best experience..
                 </h3>
                 <p className="text-gray-300 text-sm">
-                  Although i haven't treated you well , you always made me feel
-                  special. I'm sorry for everything. I know you deserve better.
+                  Although i haven&apos;t treated you well , you always made me feel
+                  special. I&apos;m sorry for everything. I know you deserve better.
                   I went silence not meant to dump you. I just wanted to
                   validate that ur feelings are valid. Although i want to
-                  express my feelings, I just couldn't find the right words. So
+                  express my feelings, I just couldn&apos;t find the right words. So
                   i made this website to express my feelings. I hope you
                   understand that i still care about you and i want to make
                   things right between us.{" "}
@@ -454,9 +459,11 @@ export default function OurStoryPage() {
                     index % 5 === 0 ? "col-span-2 row-span-2" : ""
                   }`}
                 >
-                  <img
+                  <Image
                     src={src}
                     alt={`Memory ${index + 1}`}
+                    width={400}
+                    height={400}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
